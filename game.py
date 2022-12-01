@@ -2,6 +2,8 @@ import pygame
 import random
 import sys
 
+from player import Enemy, HumanPlayer
+
 pygame.init()
 
 WIDTH = 800
@@ -12,11 +14,14 @@ BLUE = (0,0,255)
 YELLOW = (255,255,0)
 BACKGROUND_COLOR = (0,0,0)
 
-player_size = 50
-player_pos = [WIDTH/2, HEIGHT-2*player_size]
+player = HumanPlayer(WIDTH / 2, HEIGHT - 100)
+enemy = Enemy(random.randint(0 ,WIDTH), 0)
 
-enemy_size = 50
-enemy_pos = [random.randint(0,WIDTH-enemy_size), 0]
+player_size = player.size
+player_pos = [player.x, player.y]
+
+enemy_size = enemy.size
+enemy_pos = [enemy.x, enemy.y]
 enemy_list = [enemy_pos]
 
 SPEED = 10
