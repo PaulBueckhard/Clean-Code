@@ -4,14 +4,14 @@ import sys
 
 from player import Enemy, HumanPlayer
 from colour import Colour
+from screen import Screen
 
 pygame.init()
 
-WIDTH = 800
-HEIGHT = 600
+screen = Screen()
 
-player = HumanPlayer(WIDTH / 2, HEIGHT - 100)
-enemy = Enemy(random.randint(0 ,WIDTH), 0)
+player = HumanPlayer(screen.width / 2, screen.height - 100)
+enemy = Enemy(random.randint(0, screen.width), 0)
 
 player_pos = [player.x, player.y]
 
@@ -20,15 +20,9 @@ enemy_list = []
 
 SPEED = 10
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-
 game_over = False
 
 score = 0
-
-clock = pygame.time.Clock()
-
-myFont = pygame.font.SysFont("monospace", 35)
 
 def set_level(score, SPEED):
 	if score < 20:
@@ -46,17 +40,17 @@ def set_level(score, SPEED):
 def drop_enemies(enemy_list):
 	delay = random.random()
 	if len(enemy_list) < 10 and delay < 0.1:
-		x_pos = random.randint(0, WIDTH - enemy.size)
+		x_pos = random.randint(0, screen.width - enemy.size)
 		y_pos = 0
 		enemy_list.append([x_pos, y_pos])
 
 def draw_enemies(enemy_list):
 	for enemy_pos in enemy_list:
-		pygame.draw.rect(screen, Colour.BLUE, (enemy_pos[0], enemy_pos[1], enemy.size, enemy.size))
+		pygame.draw.rect(screen.screen, Colour.BLUE, (enemy_pos[0], enemy_pos[1], enemy.size, enemy.size))
 
 def update_enemy_positions(enemy_list, score):
 	for idx, enemy_pos in enumerate(enemy_list):
-		if enemy_pos[1] >= 0 and enemy_pos[1] < HEIGHT:
+		if enemy_pos[1] >= 0 and enemy_pos[1] < screen.height:
 			enemy_pos[1] += SPEED
 		else:
 			enemy_list.pop(idx)
@@ -99,15 +93,15 @@ while not game_over:
 
 			player_pos = [x,y]
 
-	screen.fill(Colour.BLACK)
+	screen.screen.fill(Colour.BLACK)
 
 	drop_enemies(enemy_list)
 	score = update_enemy_positions(enemy_list, score)
 	SPEED = set_level(score, SPEED)
 
 	text = "Score:" + str(score)
-	label = myFont.render(text, 1, Colour.YELLOW)
-	screen.blit(label, (WIDTH-200, HEIGHT-40))
+	label = screen.font.render(text, 1, Colour.YELLOW)
+	screen.screen.blit(label, (screen.width-200, screen.height-40))
 
 	if collision_check(enemy_list, player_pos):
 		game_over = True
@@ -115,8 +109,8 @@ while not game_over:
 
 	draw_enemies(enemy_list)
 
-	pygame.draw.rect(screen, Colour.RED, (player_pos[0], player_pos[1], player.size, player.size))
+	pygame.draw.rect(screen.screen, Colour.RED, (player_pos[0], player_pos[1], player.size, player.size))
 
-	clock.tick(30)
+	screen.clock.tick(screen.clock_tick)
 
 	pygame.display.update()
