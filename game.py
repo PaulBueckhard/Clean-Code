@@ -5,10 +5,12 @@ import sys
 from player import Enemy, HumanPlayer
 from colour import Colour
 from screen import Screen
+from events import Events
 
 pygame.init()
 
 screen = Screen()
+events = Events()
 
 player = HumanPlayer(screen.width / 2, screen.height - 100)
 enemy = Enemy(random.randint(0, screen.width), 0)
@@ -18,11 +20,11 @@ player_pos = [player.x, player.y]
 enemy_pos = [enemy.x, enemy.y]
 enemy_list = []
 
-SPEED = 10
+SPEED = events.speed
 
 game_over = False
 
-score = 0
+score = events.score
 
 def set_level(score, SPEED):
 	if score < 20:
@@ -34,7 +36,6 @@ def set_level(score, SPEED):
 	else:
 		SPEED = 15
 	return SPEED
-	# SPEED = score/5 + 1
 
 
 def drop_enemies(enemy_list):
