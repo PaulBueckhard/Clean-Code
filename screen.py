@@ -1,6 +1,6 @@
 import pygame
 
-from blockgame.colour import Colour
+from colour import Colour
 
 class Screen:
     def __init__(self, width = 800, height = 600, background_colour = Colour.BLACK, font_type = "monospace", font_size = 35, clock_tick = 30):

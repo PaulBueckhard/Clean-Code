@@ -2,7 +2,7 @@ import pygame
 import random
 import sys
 
-from player import Enemy, HumanPlayer
+from player import Player, Enemy, HumanPlayer
 from screen import Screen
 from events import Events
 
@@ -23,19 +23,7 @@ game_over = False
 
 def collision_check(enemy_list, player_pos):
 	for enemy_pos in enemy_list:
-		if detect_collision(enemy_pos, player_pos):
-			return True
-	return False
-
-def detect_collision(player_pos, enemy_pos):
-	p_x = player_pos[0]
-	p_y = player_pos[1]
-
-	e_x = enemy_pos[0]
-	e_y = enemy_pos[1]
-
-	if (e_x >= p_x and e_x < (p_x + player.size)) or (p_x >= e_x and p_x < (e_x+enemy.size)):
-		if (e_y >= p_y and e_y < (p_y + player.size)) or (p_y >= e_y and p_y < (e_y+enemy.size)):
+		if Player.detect_collision(player_pos, enemy_pos, player, enemy):
 			return True
 	return False
 
