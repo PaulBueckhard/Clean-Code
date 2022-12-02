@@ -18,9 +18,9 @@ def main_game_mock(player):
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                player.x -= player.size
+                player.x -= (player.size / 2)
             elif event.key == pygame.K_RIGHT:
-                player.x += player.size
+                player.x += (player.size / 2)
 
 def press_right_key():
     keyboard.press(Key.right)
@@ -34,24 +34,24 @@ def test_main_move_right() -> None:
     player = HumanPlayer(screen.width / 2, screen.height - 100)
     press_right_key()
     main_game_mock(player)
-    assert player.x == 450
+    assert player.x == 425
 
 def test_main_move_right_twice() -> None:
     player = HumanPlayer(screen.width / 2, screen.height - 100)
     press_right_key()
     press_right_key()
     main_game_mock(player)
-    assert player.x == 500
+    assert player.x == 450
 
 def test_main_move_left() -> None:
     player = HumanPlayer(screen.width / 2, screen.height - 100)
     press_left_key()
     main_game_mock(player)
-    assert player.x == 350
+    assert player.x == 375
 
 def test_main_move_left_twice() -> None:
     player = HumanPlayer(screen.width / 2, screen.height - 100)
     press_left_key()
     press_left_key()
     main_game_mock(player)
-    assert player.x == 300
+    assert player.x == 350
