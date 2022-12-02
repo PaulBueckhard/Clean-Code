@@ -1,6 +1,6 @@
 import random
 
-from player import Player, HumanPlayer, Enemy
+from player import Enemy
 
 class Events:
     Enemy = Enemy
