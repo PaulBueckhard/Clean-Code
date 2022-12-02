@@ -3,7 +3,6 @@ import random
 import sys
 
 from player import Enemy, HumanPlayer
-from colour import Colour
 from screen import Screen
 from events import Events
 
