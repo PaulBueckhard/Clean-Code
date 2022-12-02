@@ -1,3 +1,5 @@
+import pygame
+
 from blockgame.player import Player, HumanPlayer, Enemy
 from blockgame.colour import Colour
 
@@ -10,14 +12,21 @@ def test_player_attributes() -> None:
 
 def test_collision_detection_same_position() -> None:
     player = HumanPlayer(400, 500)
-    player_pos = [player.x, player.y]
     enemy = Enemy(400, 500)
-    enemy_pos = [enemy.x, enemy.y]
-    assert Player.detect_collision(player_pos, enemy_pos, player, enemy)
+    assert Player.detect_collision(player, enemy)
 
 def test_collision_detection_based_on_size() -> None:
     player = HumanPlayer(400, 500)
-    player_pos = [player.x, player.y]
     enemy = Enemy(449, 451)
-    enemy_pos = [enemy.x, enemy.y]
-    assert Player.detect_collision(player_pos, enemy_pos, player, enemy)
+    assert Player.detect_collision(player, enemy)
+
+def test_collision_detection_barely_missed() -> None:
+    player = HumanPlayer(400, 500)
+    enemy = Enemy(450, 450)
+    assert Player.detect_collision(player, enemy) == False
+
+def test_draw_function() -> None:
+    player = Player(400, 500, 50)
+    screen = pygame.display.set_mode((800, 600))
+    expected_result = str(pygame.draw.rect(screen, player.colour, (player.x, player.y, player.size, player.size)))
+    assert expected_result == '<rect(400, 500, 50, 50)>'

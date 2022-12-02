@@ -9,3 +9,9 @@ def test_screen_attributes() -> None:
     assert screen.height == 600
     assert screen.background_colour == (0,0,0)
     assert screen.clock_tick == 30
+
+def test_screen_refresh_background() -> None:
+    pygame.init()
+    screen = Screen()
+    screen.refresh_background()
+    assert screen.screen == pygame.display.set_mode((800, 600))
