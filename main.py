@@ -5,12 +5,6 @@ from player import HumanPlayer
 from screen import Screen
 from events import Events
 
-pygame.init()
-
-screen = Screen()
-player = HumanPlayer(screen.width/2, screen.height-100)
-events = Events()
-
 def play_game(screen, player, events):
 	game_over = False
 	while not game_over:
@@ -35,4 +29,11 @@ def play_game(screen, player, events):
 			game_over = True
 			break
 
-play_game(screen, player, events)
+if __name__ == "__main__":
+	pygame.init()
+
+	screen = Screen()
+	player = HumanPlayer(screen.width / 2, screen.height - 100)
+	events = Events()
+
+	play_game(screen, player, events)
