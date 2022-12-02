@@ -19,40 +19,7 @@ enemy_pos = [enemy.x, enemy.y]
 
 enemy_list = []
 
-SPEED = events.speed
-
 game_over = False
-
-score = events.score
-
-def set_level(score, SPEED):
-	if score < 20:
-		SPEED = 5
-	elif score < 40:
-		SPEED = 8
-	elif score < 60:
-		SPEED = 12
-	else:
-		SPEED = 15
-	return SPEED
-
-
-def drop_enemies(enemy_list):
-	delay = random.random()
-	if len(enemy_list) < events.max_enemies and delay < events.delay:
-		x_pos = random.randint(0, screen.width - enemy.size)
-		y_pos = 0
-		enemy_list.append([x_pos, y_pos])
-
-
-def update_enemy_positions(enemy_list, score):
-	for idx, enemy_pos in enumerate(enemy_list):
-		if enemy_pos[1] >= 0 and enemy_pos[1] < screen.height:
-			enemy_pos[1] += SPEED
-		else:
-			enemy_list.pop(idx)
-			score += 1
-	return score
 
 def collision_check(enemy_list, player_pos):
 	for enemy_pos in enemy_list:
@@ -92,12 +59,14 @@ while not game_over:
 
 	screen.refresh_background()
 
-	drop_enemies(enemy_list)
-	score = update_enemy_positions(enemy_list, score)
-	SPEED = set_level(score, SPEED)
+	events.drop_enemies(screen, enemy, enemy_list)
+
+	events.update_enemy_positions(screen, enemy_list)
+
+	events.set_level()
 
 	if collision_check(enemy_list, player_pos):
 		game_over = True
 		break
 
-	screen.update_screen(enemy_list, player, score, enemy, player_pos)
+	screen.update_screen(enemy_list, player, events.score, enemy, player_pos)
