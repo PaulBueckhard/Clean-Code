@@ -15,9 +15,9 @@ def play_game(screen, player, events):
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_LEFT and player.x > 0:
-					player.x -= player.size
+					player.x -= (player.size / 2)
 				elif event.key == pygame.K_RIGHT and player.x < (screen.width - player.size):
-					player.x += player.size
+					player.x += (player.size / 2)
 
 		events.drop_enemies(screen.width)
 		events.update_enemy_positions(screen.height)
