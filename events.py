@@ -1,6 +1,6 @@
 import random
 
-from player import Enemy
+from blockgame.player import Enemy
 
 class Events:
     Enemy = Enemy
