@@ -1,6 +1,6 @@
 import random
 
-from player import Enemy
+from player import Enemy, LargeEnemy
 
 class Events:
     Enemy = Enemy
@@ -45,3 +45,9 @@ class Events:
             if enemy.detect_collision(player):
                 return True
         return False
+
+class Level2(Events):
+    Enemy = LargeEnemy
+
+    def set_level(self):
+        self.speed = self.score/5 + 1
