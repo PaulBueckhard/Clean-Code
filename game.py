@@ -16,8 +16,8 @@ player = HumanPlayer(screen.width / 2, screen.height - 100)
 enemy = Enemy(random.randint(0, screen.width), 0)
 
 player_pos = [player.x, player.y]
-
 enemy_pos = [enemy.x, enemy.y]
+
 enemy_list = []
 
 SPEED = events.speed
@@ -40,14 +40,11 @@ def set_level(score, SPEED):
 
 def drop_enemies(enemy_list):
 	delay = random.random()
-	if len(enemy_list) < 10 and delay < 0.1:
+	if len(enemy_list) < events.max_enemies and delay < events.delay:
 		x_pos = random.randint(0, screen.width - enemy.size)
 		y_pos = 0
 		enemy_list.append([x_pos, y_pos])
 
-def draw_enemies(enemy_list):
-	for enemy_pos in enemy_list:
-		pygame.draw.rect(screen.screen, Colour.BLUE, (enemy_pos[0], enemy_pos[1], enemy.size, enemy.size))
 
 def update_enemy_positions(enemy_list, score):
 	for idx, enemy_pos in enumerate(enemy_list):
@@ -94,24 +91,14 @@ while not game_over:
 
 			player_pos = [x,y]
 
-	screen.screen.fill(Colour.BLACK)
+	screen.refresh_background()
 
 	drop_enemies(enemy_list)
 	score = update_enemy_positions(enemy_list, score)
 	SPEED = set_level(score, SPEED)
 
-	text = "Score:" + str(score)
-	label = screen.font.render(text, 1, Colour.YELLOW)
-	screen.screen.blit(label, (screen.width-200, screen.height-40))
-
 	if collision_check(enemy_list, player_pos):
 		game_over = True
 		break
 
-	draw_enemies(enemy_list)
-
-	pygame.draw.rect(screen.screen, Colour.RED, (player_pos[0], player_pos[1], player.size, player.size))
-
-	screen.clock.tick(screen.clock_tick)
-
-	pygame.display.update()
+	screen.update_screen(enemy_list, player, score, enemy, player_pos)
