@@ -12,21 +12,23 @@ class Events:
 
         self.enemy_list = []
 
-    def drop_enemies(self, screen, enemy, enemy_list):
+    def drop_enemies(self, screen_width):
         delay = random.random()
-        if len(enemy_list) < self.max_enemies and delay < self.delay:
-            x_pos = random.randint(0, screen.width - enemy.size)
+        if len(self.enemy_list) < self.max_enemies and delay < self.delay:
+            random_x = random.randint(0, screen_width)
             y_pos = 0
-            enemy_list.append([x_pos, y_pos])
+            enemy = self.Enemy(random_x, y_pos)
+            self.enemy_list.append(enemy)
 
-    def update_enemy_positions(self, screen, enemy_list):
-        for idx, enemy_pos in enumerate(enemy_list):
-            if enemy_pos[1] >= 0 and enemy_pos[1] < screen.height:
-                enemy_pos[1] += self.speed
+    def update_enemy_positions(self, screen_height):
+        new_enemy_list = []
+        for enemy in self.enemy_list:
+            if enemy.y >= 0 and enemy.y < screen_height:
+                enemy.y += self.speed
+                new_enemy_list.append(enemy)
             else:
-                enemy_list.pop(idx)
                 self.score += 1
-        return self.score
+        self.enemy_list = new_enemy_list
 
     def set_level(self):
         if self.score < 20:
@@ -37,4 +39,9 @@ class Events:
             self.speed = 12
         else:
             self.speed = 15
-        return self.speed
+
+    def collision_check(self, player):
+        for enemy in self.enemy_list:
+            if enemy.detect_collision(player):
+                return True
+        return False

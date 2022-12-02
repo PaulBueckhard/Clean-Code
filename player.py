@@ -1,3 +1,5 @@
+import pygame
+
 from colour import Colour
 
 class Player:
@@ -7,15 +9,12 @@ class Player:
         self.size = size
         self.colour = colour
 
-    def detect_collision(player_pos, enemy_pos, player, enemy):
-        p_x = player_pos[0]
-        p_y = player_pos[1]
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour, (self.x, self.y, self.size, self.size))
 
-        e_x = enemy_pos[0]
-        e_y = enemy_pos[1]
-
-        if (e_x >= p_x and e_x < (p_x + player.size)) or (p_x >= e_x and p_x < (e_x + enemy.size)):
-            if (e_y >= p_y and e_y < (p_y + player.size)) or (p_y >= e_y and p_y < (e_y + enemy.size)):
+    def detect_collision(self, other):
+        if (other.x >= self.x and other.x < (self.x + self.size)) or (self.x >= other.x and self.x < (other.x + other.size)):
+            if (other.y >= self.y and other.y < (self.y + self.size)) or (self.y >= other.y and self.y < (other.y + self.size)):
                 return True
         return False
 

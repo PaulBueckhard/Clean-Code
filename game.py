@@ -1,60 +1,38 @@
-import pygame
-import random
 import sys
+import pygame
 
-from player import Player, Enemy, HumanPlayer
+from player import HumanPlayer
 from screen import Screen
 from events import Events
 
 pygame.init()
 
 screen = Screen()
+player = HumanPlayer(screen.width/2, screen.height-100)
 events = Events()
 
-player = HumanPlayer(screen.width / 2, screen.height - 100)
-enemy = Enemy(random.randint(0, screen.width), 0)
+def play_game(screen, player, events):
+	game_over = False
+	while not game_over:
 
-player_pos = [player.x, player.y]
-enemy_pos = [enemy.x, enemy.y]
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
 
-enemy_list = []
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_LEFT and player.x > 0:
+					player.x -= player.size
+				elif event.key == pygame.K_RIGHT and player.x < (screen.width - player.size):
+					player.x += player.size
 
-game_over = False
+		events.drop_enemies(screen.width)
+		events.update_enemy_positions(screen.height)
+		events.set_level()
 
-def collision_check(enemy_list, player_pos):
-	for enemy_pos in enemy_list:
-		if Player.detect_collision(player_pos, enemy_pos, player, enemy):
-			return True
-	return False
+		screen.update_screen(events.enemy_list, player, events.score)
 
-while not game_over:
+		if events.collision_check(player):
+			game_over = True
+			break
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			sys.exit()
-
-		if event.type == pygame.KEYDOWN:
-
-			x = player_pos[0]
-			y = player_pos[1]
-
-			if event.key == pygame.K_LEFT:
-				x -= player.size
-			elif event.key == pygame.K_RIGHT:
-				x += player.size
-
-			player_pos = [x,y]
-
-	screen.refresh_background()
-
-	events.drop_enemies(screen, enemy, enemy_list)
-
-	events.update_enemy_positions(screen, enemy_list)
-
-	events.set_level()
-
-	if collision_check(enemy_list, player_pos):
-		game_over = True
-		break
-
-	screen.update_screen(enemy_list, player, events.score, enemy, player_pos)
+play_game(screen, player, events)
