@@ -1,6 +1,6 @@
 import random
 
-from player import Enemy, LargeEnemy
+from player import Enemy, LargeEnemy, BossEnemy
 
 class Events:
     Enemy = Enemy
@@ -51,3 +51,9 @@ class Level2(Events):
 
     def set_level(self):
         self.speed = self.score/5 + 1
+
+class Level3(Events):
+    Enemy = BossEnemy
+
+    def set_level(self):
+        self.speed = self.score/4 + 1

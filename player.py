@@ -24,7 +24,11 @@ class Enemy(Player):
 
 class LargeEnemy(Player):
     def __init__(self, x, y):
-        super().__init__(x, y, size = 75, colour = Colour.BLUE)
+        super().__init__(x, y, size = 75, colour = Colour.GREEN)
+
+class BossEnemy(Player):
+    def __init__(self, x, y):
+        super().__init__(x, y, size = 100, colour = Colour.YELLOW)
 
 class HumanPlayer(Player):
     def __init__(self, x, y):
