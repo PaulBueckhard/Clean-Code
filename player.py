@@ -1,6 +1,7 @@
 import pygame
 
-from colour import Colour
+#from colour import Colour
+from blockgame.colour import Colour
 
 class Player:
     def __init__(self, x, y, size, colour = Colour.RED):

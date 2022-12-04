@@ -1,9 +1,13 @@
 import sys
 import pygame
 
-from player import HumanPlayer
-from screen import Screen
-from events import Events
+#from player import HumanPlayer
+#from screen import Screen
+#from events import Events
+
+from blockgame.player import HumanPlayer
+from blockgame.screen import Screen
+from blockgame.events import Events
 
 def play_game(screen, player, events):
 	game_over = False
